@@ -1,9 +1,76 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Home Page</title>
-</head>
-<body>
-<h2>Welcome To Django Delights Cafe</h2>
-</body>
-</html>
+{% extends 'inventory/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="home">
+        <div>
+            <h2>Ingredients</h2>
+            <table class="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Stock</th>
+                        <th>Unit</th>
+                        <th>Unit Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ingredient in ingredients %}
+                        <tr>
+                            <td>{{ ingredient.name }}</td>
+                            <td>{{ ingredient.stock }}</td>
+                            <td>{{ ingredient.unit }}</td>
+                            <td class="price">${{ ingredient.unitPrice | stringformat:".2f" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <hr/>
+
+        <div>
+            <h2>Menu</h2>
+            <table class="menu-items">
+                <thead>
+                    <tr>
+                        <th>Menu Item</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for menuItem in menuItems %}
+                        <tr>
+                            <td>{{ menuItem.name }}</td>
+                            <td class="price">${{ menuItem.price | stringformat:".2f" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <hr/>
+
+        <div>
+            <h2>Purchases</h2>
+            <table class="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Menu Item</th>
+                        <th>Price</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for purchase in purchases %}
+                        <tr>
+                            <td>{{purchase.menuItem.name}}</td>
+                            <td class="price">${{ purchase.menuItem.price | stringformat:".2f" }}</td>
+                            <td>{{ purchase.timestamp }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

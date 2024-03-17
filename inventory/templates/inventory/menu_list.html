@@ -1,0 +1,37 @@
+{% extends 'inventory/base.html' %}
+{% load static %}
+{% block title %}Django Delights {% endblock %}
+{% block head %}{% endblock %}
+{% block content %}
+<div>
+    <h2>Menu</h2>
+    <p><a href="{% url 'add_menu_item' %}">Add Menu Item</a></p>
+    <p><a href="{% url 'add_recipe_requirement'%}">Add Recipe Requirement for an existing menu item</a></p>
+    <table class="menu-items">
+        <thead>
+            <tr>
+                <th>Menu Item</th>
+                <th>Price</th>
+                <th>Recipe Requirement</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for menuItem in object_list %}
+                <tr>
+                    <td>
+                        <a href="{% url 'update_menu_item' menuItem.id %}">{{ menuItem.name }}</a>
+                    </td>
+                    <td class="price">${{ menuItem.price | stringformat:".2f" }}</td>
+                    <td>
+                        <ul>
+                            {% for recipe_requirement in menuItem.reciperequirement_set.all %}
+                            <li>{{ recipe_requirement.quantity }} {{ recipe_requirement.ingredient.unit }} of {{ recipe_requirement.ingredient.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
