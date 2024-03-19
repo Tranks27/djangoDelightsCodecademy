@@ -11,5 +11,6 @@ urlpatterns = [
     path('menu/<slug:pk>/update', views.UpdateMenuItemView.as_view(), name="update_menu_item"),
     path('reciperequirement/new', views.NewRecipeRequirementView.as_view(), name="add_recipe_requirement"),
     path('purchases/', views.PurchaseView.as_view(), name="purchases"),
+    path('purchases/new', views.NewPurchaseView.as_view(), name="add_purchase"),
     
 ]

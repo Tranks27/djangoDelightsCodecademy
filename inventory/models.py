@@ -14,6 +14,7 @@ class Ingredient(models.Model):
         unit={self.unit};
         unitPrice={self.unitPrice}
         """
+    
     def get_absolute_url(self):
         return "/menu"
     
@@ -24,6 +25,9 @@ class MenuItem(models.Model):
     def __str__(self):
         return f"MenuItem = {self.name}; price={self.price}"
 
+    def available(self):
+        return all(X.enough() for X in self.reciperequirement_set.all())
+    
     def get_absolute_url(self):
         return "/menu"
     
@@ -38,6 +42,9 @@ class RecipeRequirement(models.Model):
         ingredient={self.ingredient.name};
         qty={self.quantity}
         """
+    def enough(self):
+        return self.quantity <= self.ingredient.stock
+    
     def get_absolute_url(self):
         return "/menu"
 
